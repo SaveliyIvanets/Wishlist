@@ -1,4 +1,4 @@
-import config = require("../../config.json")
+const config = require('../../config')
 
 if (!['sqlite', 'postgresql'].includes(config.db.databaseEngine)) {
   throw new Error(`проблема с databaseEngine:\n ${config.db.databaseEngine}`)
@@ -10,3 +10,4 @@ const sequelize =
     : require('./sqlite')
 
 module.exports = sequelize
+export {}

@@ -1,5 +1,6 @@
 const path = require('path')
-function errorCatcher(err, req, res, next) {
+import { Request, Response, NextFunction } from 'express';
+function errorCatcher(err: any, req: Request, res: Response, next: NextFunction) {
   const error = {
     status: err.status || 500,
     message: err.message,

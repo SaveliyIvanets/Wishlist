@@ -13,11 +13,11 @@ interface AppModels {
 }
 
 const models: AppModels = {
-  Task: require('./models/task').default,
-  User: require('./models/user').default,
-  Role: require('./models/role').default,
+  Task: require('./models/task'),
+  User: require('./models/user'),
+  Role: require('./models/role'),
 };
-const repository = require('./repository/sequelizeRepository')
+const repository = require('./sequelizeRepository')
 const initDb = async () => {
   try {
     await sequelize.authenticate()
@@ -33,8 +33,10 @@ const initDb = async () => {
 
     let adminRole = null
     let userRole = null
+    let moderatorRole = null
     let admin = null
     try {
+      moderatorRole = await roleRepository.findOne({role:'moderator'});
       adminRole = await roleRepository.findOne({ role: 'admin' })
       userRole = await roleRepository.findOne({ role: 'user' })
       admin = await userRepository.findOne({ username: 'admin' })
@@ -48,6 +50,9 @@ const initDb = async () => {
 
     if (!userRole) {
       userRole = await roleRepository.create({ role: 'user' })
+    }
+     if (!moderatorRole) {
+      moderatorRole = await roleRepository.create({ role: 'moderator' })
     }
 
     if (!admin) {

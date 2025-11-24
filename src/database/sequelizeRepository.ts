@@ -1,4 +1,4 @@
-const { Model, ModelStatic, FindOptions, WhereOptions,Attributes } = require('sequelize')
+import { Model, ModelStatic, FindOptions, WhereOptions,Attributes } from 'sequelize' 
 
 export class SequelizeRepository<T extends Model> {
   private model: ModelStatic<T>
@@ -48,7 +48,7 @@ export class SequelizeRepository<T extends Model> {
     }
   }
 
-  async update(id: Attributes<T>['id'], data: object): Promise<void> {
+  async update( id: Attributes<T>['id'], data: object): Promise<void> {
     const [updatedCount] = await this.model.update(data, { where: { id } })
 
     if (!updatedCount) {
@@ -74,3 +74,4 @@ export class SequelizeRepository<T extends Model> {
     })
   }
 }
+module.exports = SequelizeRepository

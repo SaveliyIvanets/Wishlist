@@ -33,7 +33,7 @@ module.exports = (req: Request, res: Response, next: NextFunction) => {
     } catch (e : any) {
       console.error('Role not found for user:', user.id, e.message)
     }
-    (req as any) = user || payload
+    (req as any).user = user || payload
     next()
   })
 }
