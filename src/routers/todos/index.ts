@@ -42,7 +42,6 @@ router.get(
 )
 router.get(
   '/public',
-  asyncHandler(require('../../middleware/ensureAdminMiddleware')),
   asyncHandler(require("./showPublic")
 ))
 router.get(

@@ -73,5 +73,25 @@ export class SequelizeRepository<T extends Model> {
       order: sorted && sortValue ? [[sortValue, 'DESC']] : undefined,
     })
   }
+  async findAllWithUser(
+  model:ModelStatic<T>,
+  param:string,
+  filter: WhereOptions,
+  limit?: number,
+  offset?: number,
+  sortValue?: string,
+  sorted?: boolean,
+): Promise<(T & { user?: { username: string } })[]> {
+  return await this.model.findAll({
+    where: filter,
+    offset,
+    limit,
+    order: sorted && sortValue ? [[sortValue, 'DESC']] : undefined,
+    include: [{
+      model: model,
+      attributes: [param]
+    }]
+  });
+}
 }
 module.exports = SequelizeRepository
